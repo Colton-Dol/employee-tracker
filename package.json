@@ -1,0 +1,22 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "A cli program to interact with a database to keep track of employees.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Colton-Dol/employee-tracker.git"
+  },
+  "keywords": [
+    "database"
+  ],
+  "author": "Colton Doling",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Colton-Dol/employee-tracker/issues"
+  },
+  "homepage": "https://github.com/Colton-Dol/employee-tracker#readme"
+}
