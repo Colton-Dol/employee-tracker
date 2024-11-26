@@ -4,7 +4,11 @@ import pg from "pg";
 const { Pool } = pg;
 
 const pool = new Pool ({
-    uri: process.env.POSTGRES_URI
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    host: 'localhost',
+    database: process.env.DB_NAME,
+    port: 5432
 });
 
 const connectToDb = async () => {
