@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Colton-Dol/employee-tracker#readme",
   "dependencies": {
     "inquirer": "12.1.0",
-    "pg": "8.13.1"
+    "pg": "8.13.1",
+    "dotenv": "16.4.5"
   }
 }
