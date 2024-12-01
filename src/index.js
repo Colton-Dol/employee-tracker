@@ -1,4 +1,7 @@
 import inquirer from "inquirer"
+import { connectToDb } from "./connection.js"
+
+await connectToDb();
 
 inquirer
     .prompt([
