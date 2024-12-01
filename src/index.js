@@ -1,5 +1,5 @@
-import inquirer from "inquirer"
-import { connectToDb } from "./connection.js"
+import inquirer from "inquirer";
+import { connectToDb } from "./connection.js";
 
 await connectToDb();
 
@@ -24,7 +24,7 @@ const performActions = () => {
     ])
     .then((answers) => {
         if (answers.action === 'View All Departments') {
-
+            
         } else if (answers.action === 'View All Roles') {
 
         } else if (answers.action === 'View All Employees') {
@@ -38,7 +38,12 @@ const performActions = () => {
         } else if (answers.action === 'Update Employee Role') {
 
         } else {
-            process.exit(1)
+            process.exit(1);
+        }
+        if (answers.action !== 'Quit') {
+            performActions();
         }
     })
 }
+
+performActions();
