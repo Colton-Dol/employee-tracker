@@ -1,4 +1,5 @@
 import inquirer from "inquirer";
+import Queries from "./queries.js";
 import { connectToDb } from "./connection.js";
 
 await connectToDb();
@@ -24,7 +25,7 @@ const performActions = () => {
     ])
     .then((answers) => {
         if (answers.action === 'View All Departments') {
-            
+            Queries.viewDepartments();
         } else if (answers.action === 'View All Roles') {
 
         } else if (answers.action === 'View All Employees') {
