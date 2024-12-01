@@ -3,8 +3,9 @@ import { connectToDb } from "./connection.js"
 
 await connectToDb();
 
-inquirer
-    .prompt([
+const performActions = () => {
+    inquirer
+     .prompt([
         {
             type: 'list',
             name: 'action',
@@ -16,7 +17,9 @@ inquirer
                 'Add Department',
                 'Add Role',
                 'Add Employee',
-                'Update Employee Role'
+                'Update Employee Role',
+                'Quit'
             ]
         }
     ])
+}
