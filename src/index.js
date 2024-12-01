@@ -22,4 +22,23 @@ const performActions = () => {
             ]
         }
     ])
+    .then((answers) => {
+        if (answers.action === 'View All Departments') {
+
+        } else if (answers.action === 'View All Roles') {
+
+        } else if (answers.action === 'View All Employees') {
+            
+        } else if (answers.action === 'Add Department') {
+
+        } else if (answers.action === 'Add Role') {
+
+        } else if (answers.action === 'Add Employee') {
+
+        } else if (answers.action === 'Update Employee Role') {
+
+        } else {
+            process.exit(1)
+        }
+    })
 }
