@@ -69,7 +69,7 @@ class Queries {
                 {
                     type: 'input',
                     name: 'department',
-                    message: 'What department does the role belong to?'
+                    message: 'Which department does the role belong to?'
                 }
             ])
             .then((answers) => {
@@ -135,7 +135,42 @@ class Queries {
     }
 
     updateEmployeeRole() {
-        
+        inquirer
+            .prompt([
+                {
+                    type: 'list',
+                    name: 'employee',
+                    message: `Which employee's role do you want to update?`,
+                    choices: [
+
+                    ]
+                },
+                {
+                    type: 'list',
+                    name: 'role',
+                    message: 'Which role do you want to assign to the selected employee?',
+                    choices: [
+
+                    ]
+                }
+            ])
+            .then((answers) => {
+                pool.query(`SELECT id FROM role where title = '${answers.role}'`, (err, res) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        const roleId = res.rows[0].id
+
+                        pool.query(`UPDATE employee SET role_id = '${roleId}' where name = '${answers.employee}'`, (err, res) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log(`Updated employee's role`);
+                            }
+                        })
+                    }
+                })
+            })
     }
 }
 
