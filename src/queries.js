@@ -23,7 +23,13 @@ class Queries {
     }
 
     viewEmployees() {
-
+        pool.query('SELECT * FROM employee', (err, res) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(res.rows);
+            }
+        })
     }
 
     addDepartment() {
