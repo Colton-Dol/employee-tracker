@@ -54,7 +54,41 @@ class Queries {
     }
 
     addRole() {
+        inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'title',
+                    message: 'What is the name of the role?'
+                },
+                {
+                    type: 'input',
+                    name: 'salary',
+                    message: 'What is the salary of the role?'
+                },
+                {
+                    type: 'input',
+                    name: 'department',
+                    message: 'What department does the role belong to?'
+                }
+            ])
+            .then((answers) => {
+                pool.query(`SELECT id FROM department where name = '${answers.department}'`, (err, res) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        const departmentId = res.rows[0].id;
 
+                        pool.query(`INSERT INTO role(title, salary, department_id) VALUES ('${answers.title}', '${answers.salary}', ${departmentId})`, (err, res) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log(`Added ${answers.title} to the database`);
+                            }
+                        })
+                    }
+                })
+            })
     }
 
     addEmployee() {
