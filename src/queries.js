@@ -7,6 +7,7 @@ class Queries {
         pool.query('SELECT * FROM department', (err, res) => {
             if (err) {
                 console.log(err);
+                process.exit(1);
             } else {
                 console.log(res.rows);
             }
@@ -17,6 +18,7 @@ class Queries {
         pool.query('SELECT * FROM role', (err, res) => {
             if (err) {
                 console.log(err);
+                process.exit(1);
             } else {
                 console.log(res.rows);
             }
@@ -27,6 +29,7 @@ class Queries {
         pool.query('SELECT * FROM employee', (err, res) => {
             if (err) {
                 console.log(err);
+                process.exit(1);
             } else {
                 console.log(res.rows);
             }
@@ -46,6 +49,7 @@ class Queries {
                 pool.query(`INSERT INTO department(name) VALUES ('${answers.department}')`, (err, res) => {
                     if (err) {
                         console.log(err);
+                        process.exit(1);
                     } else {
                         console.log(`Added ${answers.department} to the database`);
                     }
@@ -76,12 +80,14 @@ class Queries {
                 pool.query(`SELECT id FROM department where name = '${answers.department}'`, (err, res) => {
                     if (err) {
                         console.log(err);
+                        process.exit(1);
                     } else {
                         const departmentId = res.rows[0].id;
 
                         pool.query(`INSERT INTO role(title, salary, department_id) VALUES ('${answers.title}', '${answers.salary}', ${departmentId})`, (err, res) => {
                             if (err) {
                                 console.log(err);
+                                process.exit(1);
                             } else {
                                 console.log(`Added ${answers.title} to the database`);
                             }
@@ -127,6 +133,7 @@ class Queries {
                     ('${answers.firstName}', '${answers.lastName}', '${answers.role}', '${answers.manager}')`, (err, res) => {
                         if (err) {
                             console.log(err);
+                            process.exit(1);
                         } else {
                             console.log(`Added ${answers.firstName} ${answers.lastName} to the database`);
                         }
@@ -158,12 +165,14 @@ class Queries {
                 pool.query(`SELECT id FROM role where title = '${answers.role}'`, (err, res) => {
                     if (err) {
                         console.log(err);
+                        process.exit(1);
                     } else {
                         const roleId = res.rows[0].id
 
                         pool.query(`UPDATE employee SET role_id = '${roleId}' where name = '${answers.employee}'`, (err, res) => {
                             if (err) {
                                 console.log(err);
+                                process.exit(1);
                             } else {
                                 console.log(`Updated employee's role`);
                             }
