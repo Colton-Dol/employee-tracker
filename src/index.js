@@ -27,22 +27,19 @@ const performActions = () => {
         if (answers.action === 'View All Departments') {
             Queries.viewDepartments();
         } else if (answers.action === 'View All Roles') {
-
+            Queries.viewRoles();
         } else if (answers.action === 'View All Employees') {
-            
+            Queries.viewEmployees();
         } else if (answers.action === 'Add Department') {
-
+            Queries.addDepartment();
         } else if (answers.action === 'Add Role') {
-
+            Queries.addRole();
         } else if (answers.action === 'Add Employee') {
-
+            Queries.addEmployee();
         } else if (answers.action === 'Update Employee Role') {
-
+            Queries.updateEmployeeRole();
         } else {
             process.exit(1);
-        }
-        if (answers.action !== 'Quit') {
-            performActions();
         }
     })
 }
