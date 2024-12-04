@@ -25,11 +25,11 @@ const performActions = () => {
     ])
     .then((answers) => {
         if (answers.action === 'View All Departments') {
-            Db.viewDepartments();
+            viewAllDepartments();
         } else if (answers.action === 'View All Roles') {
-            Db.viewRoles();
+            viewAllRoles();
         } else if (answers.action === 'View All Employees') {
-            Db.viewEmployees();
+            viewAllEmployees();
         } else if (answers.action === 'Add Department') {
             Db.addDepartment();
         } else if (answers.action === 'Add Role') {
@@ -42,6 +42,18 @@ const performActions = () => {
             process.exit(1);
         }
     })
+}
+
+function viewAllDepartments() {
+    Db.viewDepartments().then((departments) => console.table(departments));
+}
+
+function viewAllRoles() {
+    Db.viewRoles().then((roles) => console.table(roles));
+}
+
+function viewAllEmployees() {
+    Db.viewEmployees().then((employees) => console.table(employees));
 }
 
 performActions();
