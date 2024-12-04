@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
-import Queries from "./queries.js";
-import { connectToDb } from "./connection.js";
+import Db from "./db/queries.js";
+import { connectToDb } from "./db/connection.js";
 
 await connectToDb();
 
@@ -25,19 +25,19 @@ const performActions = () => {
     ])
     .then((answers) => {
         if (answers.action === 'View All Departments') {
-            Queries.viewDepartments();
+            Db.viewDepartments();
         } else if (answers.action === 'View All Roles') {
-            Queries.viewRoles();
+            Db.viewRoles();
         } else if (answers.action === 'View All Employees') {
-            Queries.viewEmployees();
+            Db.viewEmployees();
         } else if (answers.action === 'Add Department') {
-            Queries.addDepartment();
+            Db.addDepartment();
         } else if (answers.action === 'Add Role') {
-            Queries.addRole();
+            Db.addRole();
         } else if (answers.action === 'Add Employee') {
-            Queries.addEmployee();
+            Db.addEmployee();
         } else if (answers.action === 'Update Employee Role') {
-            Queries.updateEmployeeRole();
+            Db.updateEmployeeRole();
         } else {
             process.exit(1);
         }
