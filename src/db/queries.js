@@ -3,38 +3,27 @@ import { pool } from "./connection.js";
 
 class Db {
     
+    async query(text) {
+        try {
+            let response = await pool.query(text);
+            let array = await response.rows;
+            return array;
+        } catch (error) {
+            console.error("There was a problem querying the database:", error);
+            process.exit(1);
+        }
+    }
+
     viewDepartments() {
-        pool.query('SELECT * FROM department', (err, res) => {
-            if (err) {
-                console.log(err);
-                process.exit(1);
-            } else {
-                console.log(res.rows);
-                console.table(res.rows);
-            }
-        })
+        return this.query('SELECT * FROM department');
     }
 
     viewRoles() {
-        pool.query('SELECT * FROM role', (err, res) => {
-            if (err) {
-                console.log(err);
-                process.exit(1);
-            } else {
-                console.log(res.rows);
-            }
-        })
+        return this.query('SELECT * FROM role');
     }
 
     viewEmployees() {
-        pool.query('SELECT * FROM employee', (err, res) => {
-            if (err) {
-                console.log(err);
-                process.exit(1);
-            } else {
-                console.log(res.rows);
-            }
-        })
+        return this.query('SELECT * FROM employee');
     }
 
     addDepartment() {
