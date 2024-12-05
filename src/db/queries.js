@@ -14,6 +14,10 @@ class Db {
         }
     }
 
+    findDepartments() {
+        return this.query('SELECT name, id as value FROM department ORDER BY name;')
+    }
+
     viewDepartments() {
         return this.query('SELECT * FROM department ORDER BY name;');
     }
@@ -38,15 +42,13 @@ class Db {
         return this.query(`INSERT INTO department (name) VALUES ('${name}');`);
     }
 
-    async addRole(answers) {
-        const res = await this.query(`SELECT id FROM department where name = '${answers.department}'`);
-        const id = res[0].id;
-        return this.query(`INSERT INTO role (title, salary, department_id) VALUES ('${answers.title}', ${answers.salary}, ${id});`);
+    addRole(answers) {
+        return this.query(`INSERT INTO role (title, salary, department_id) VALUES ('${answers.title}', ${answers.salary}, ${answers.department});`);
     }
 
     addEmployee(answers) {
         return this.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES 
-            ('${answers.firstName}', '${answers.lastName}', '${answers.role}', ${answers.manager})`);
+            ('${answers.firstName}', '${answers.lastName}', ${answers.role}, ${answers.manager})`);
     }
 
     updateEmployeeRole() {

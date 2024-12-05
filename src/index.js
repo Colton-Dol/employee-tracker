@@ -88,7 +88,7 @@ function addNewRole() {
                     type: 'list',
                     name: 'department',
                     message: 'Which department does the role belong to?',
-                    choices: Db.viewDepartments()
+                    choices: Db.findDepartments()
                 }
             ])
             .then((answers) => {
