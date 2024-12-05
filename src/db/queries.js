@@ -15,15 +15,15 @@ class Db {
     }
 
     viewDepartments() {
-        return this.query('SELECT * FROM department');
+        return this.query('SELECT * FROM department;');
     }
 
     viewRoles() {
-        return this.query('SELECT * FROM role');
+        return this.query('SELECT r.id, title, name as department, salary FROM role r INNER JOIN department d on d.id = r.department_id;');
     }
 
     viewEmployees() {
-        return this.query('SELECT * FROM employee');
+        return this.query('SELECT e.id, first_name, last_name, title, r.department_id as department, salary, manager_id as manager FROM employee e INNER JOIN role r on e.role_id = r.id;');
     }
 
     addDepartment() {
