@@ -35,7 +35,7 @@ const performActions = () => {
         } else if (answers.action === 'Add Role') {
             addNewRole();
         } else if (answers.action === 'Add Employee') {
-            Db.addEmployee();
+            addNewEmployee();
         } else if (answers.action === 'Update Employee Role') {
             Db.updateEmployeeRole();
         } else {
@@ -94,6 +94,38 @@ function addNewRole() {
             .then((answers) => {
                 Db.addRole(answers);
                 console.log(`Added ${answers.title} to the database`);
+            })
+}
+
+function addNewEmployee() {
+    inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'firstName',
+                    message: `What is the employee's first name?`
+                },
+                {
+                    type: 'input',
+                    name: 'lastName',
+                    message: `What is the employee's last name?`
+                },
+                {
+                    type: 'list',
+                    name: 'role',
+                    message: `What is the employee's role?`,
+                    choices: Db.findRoles()
+                },
+                {
+                    type: 'list',
+                    name: 'manager',
+                    message: `Who is the employee's manager?`,
+                    choices: Db.findEmployees()
+                }
+            ])
+            .then((answers) => {
+                Db.addEmployee(answers);
+                console.log(`Added ${answers.firstName} ${answers.lastName} to the database`);
             })
 }
 
