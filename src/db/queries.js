@@ -26,25 +26,8 @@ class Db {
         return this.query('SELECT e.id, first_name, last_name, title, r.department_id as department, salary, manager_id as manager FROM employee e INNER JOIN role r on e.role_id = r.id;');
     }
 
-    addDepartment() {
-        inquirer
-            .prompt([
-                {
-                    type: 'input',
-                    name: 'department',
-                    message: 'What is the name of the department?'
-                }
-            ])
-            .then((answers) => {
-                pool.query(`INSERT INTO department(name) VALUES ('${answers.department}')`, (err, res) => {
-                    if (err) {
-                        console.log(err);
-                        process.exit(1);
-                    } else {
-                        console.log(`Added ${answers.department} to the database`);
-                    }
-                })
-            })
+    addDepartment(name) {
+        return this.query(`INSERT INTO department (name) VALUES ('${name}');`);
     }
 
     addRole() {

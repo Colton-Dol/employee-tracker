@@ -31,7 +31,7 @@ const performActions = () => {
         } else if (answers.action === 'View All Employees') {
             viewAllEmployees();
         } else if (answers.action === 'Add Department') {
-            Db.addDepartment();
+            addNewDepartment();
         } else if (answers.action === 'Add Role') {
             Db.addRole();
         } else if (answers.action === 'Add Employee') {
@@ -54,6 +54,21 @@ function viewAllRoles() {
 
 function viewAllEmployees() {
     Db.viewEmployees().then((employees) => console.table(employees));
+}
+
+function addNewDepartment() {
+    inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'department',
+                    message: 'What is the name of the department?'
+                }
+            ])
+            .then((answers) => {
+                Db.addDepartment(answers.department);
+                console.log(`Added ${answers.department} to the database`);
+            })
 }
 
 performActions();
