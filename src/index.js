@@ -4,7 +4,7 @@ import { connectToDb } from "./db/connection.js";
 
 await connectToDb();
 
-const performActions = () => {
+const loadPrompts = () => {
     inquirer
      .prompt([
         {
@@ -44,20 +44,23 @@ const performActions = () => {
     })
 }
 
-function viewAllDepartments() {
-    Db.viewDepartments().then((departments) => console.table(departments));
+async function viewAllDepartments() {
+    await Db.viewDepartments().then((departments) => console.table(departments));
+    loadPrompts();
 }
 
-function viewAllRoles() {
-    Db.viewRoles().then((roles) => console.table(roles));
+async function viewAllRoles() {
+    await Db.viewRoles().then((roles) => console.table(roles));
+    loadPrompts();
 }
 
-function viewAllEmployees() {
-    Db.viewEmployees().then((employees) => console.table(employees));
+async function viewAllEmployees() {
+    await Db.viewEmployees().then((employees) => console.table(employees));
+    loadPrompts();
 }
 
-function addNewDepartment() {
-    inquirer
+async function addNewDepartment() {
+    await inquirer
             .prompt([
                 {
                     type: 'input',
@@ -69,10 +72,12 @@ function addNewDepartment() {
                 Db.addDepartment(answers.department);
                 console.log(`Added ${answers.department} to the database`);
             })
+    
+    loadPrompts();
 }
 
-function addNewRole() {
-    inquirer
+async function addNewRole() {
+    await inquirer
             .prompt([
                 {
                     type: 'input',
@@ -95,10 +100,12 @@ function addNewRole() {
                 Db.addRole(answers);
                 console.log(`Added ${answers.title} to the database`);
             })
+
+    loadPrompts();
 }
 
-function addNewEmployee() {
-    inquirer
+async function addNewEmployee() {
+    await inquirer
             .prompt([
                 {
                     type: 'input',
@@ -127,10 +134,12 @@ function addNewEmployee() {
                 Db.addEmployee(answers);
                 console.log(`Added ${answers.firstName} ${answers.lastName} to the database`);
             })
+
+    loadPrompts();
 }
 
-function updateEmployeeRole() {
-    inquirer
+async function updateEmployeeRole() {
+    await inquirer
             .prompt([
                 {
                     type: 'list',
@@ -149,6 +158,8 @@ function updateEmployeeRole() {
                 Db.updateEmployeeRole(answers);
                 console.log(`Updated employee's role`);
             })
+
+    loadPrompts();
 }
 
-performActions();
+loadPrompts();
