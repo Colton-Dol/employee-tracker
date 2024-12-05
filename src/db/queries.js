@@ -15,11 +15,19 @@ class Db {
     }
 
     viewDepartments() {
-        return this.query('SELECT * FROM department;');
+        return this.query('SELECT * FROM department ORDER BY name;');
+    }
+
+    findRoles() {
+        return this.query('SELECT title as name, id as value FROM role;');
     }
 
     viewRoles() {
         return this.query('SELECT r.id, title, name as department, salary FROM role r INNER JOIN department d on d.id = r.department_id;');
+    }
+
+    findEmployees() {
+        return this.query(`SELECT CONCAT(first_name, ' ', last_name) AS name, id as value FROM employee;`);
     }
 
     viewEmployees() {
@@ -36,48 +44,9 @@ class Db {
         return this.query(`INSERT INTO role (title, salary, department_id) VALUES ('${answers.title}', ${answers.salary}, ${id});`);
     }
 
-    addEmployee() {
-        inquirer
-            .prompt([
-                {
-                    type: 'input',
-                    name: 'firstName',
-                    message: `What is the employee's first name?`
-                },
-                {
-                    type: 'input',
-                    name: 'lastName',
-                    message: `What is the employee's last name?`
-                },
-                {
-                    type: 'list',
-                    name: 'role',
-                    message: `What is the employee's role?`,
-                    choices: [
-                        
-                    ]
-                },
-                {
-                    type: 'list',
-                    name: 'manager',
-                    message: `Who is the employee's manager?`,
-                    choices: [
-                        'None',
-
-                    ]
-                }
-            ])
-            .then((answers) => {
-                pool.query(`INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES
-                    ('${answers.firstName}', '${answers.lastName}', '${answers.role}', ${answers.manager = 'None' ? null : `${answers.manager}`})`, (err, res) => {
-                        if (err) {
-                            console.log(err);
-                            process.exit(1);
-                        } else {
-                            console.log(`Added ${answers.firstName} ${answers.lastName} to the database`);
-                        }
-                    })
-            })
+    addEmployee(answers) {
+        return this.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES 
+            ('${answers.firstName}', '${answers.lastName}', '${answers.role}', ${answers.manager})`);
     }
 
     updateEmployeeRole() {
