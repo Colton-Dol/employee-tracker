@@ -30,47 +30,10 @@ class Db {
         return this.query(`INSERT INTO department (name) VALUES ('${name}');`);
     }
 
-    addRole() {
-        inquirer
-            .prompt([
-                {
-                    type: 'input',
-                    name: 'title',
-                    message: 'What is the name of the role?'
-                },
-                {
-                    type: 'input',
-                    name: 'salary',
-                    message: 'What is the salary of the role?'
-                },
-                {
-                    type: 'list',
-                    name: 'department',
-                    message: 'Which department does the role belong to?',
-                    choices: [
-
-                    ]
-                }
-            ])
-            .then((answers) => {
-                pool.query(`SELECT id FROM department where name = '${answers.department}'`, (err, res) => {
-                    if (err) {
-                        console.log(err);
-                        process.exit(1);
-                    } else {
-                        const departmentId = res.rows[0].id;
-
-                        pool.query(`INSERT INTO role(title, salary, department_id) VALUES ('${answers.title}', '${answers.salary}', ${departmentId})`, (err, res) => {
-                            if (err) {
-                                console.log(err);
-                                process.exit(1);
-                            } else {
-                                console.log(`Added ${answers.title} to the database`);
-                            }
-                        })
-                    }
-                })
-            })
+    async addRole(answers) {
+        const res = await this.query(`SELECT id FROM department where name = '${answers.department}'`);
+        const id = res[0].id;
+        return this.query(`INSERT INTO role (title, salary, department_id) VALUES ('${answers.title}', ${answers.salary}, ${id});`);
     }
 
     addEmployee() {

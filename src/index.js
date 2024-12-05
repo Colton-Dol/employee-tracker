@@ -33,7 +33,7 @@ const performActions = () => {
         } else if (answers.action === 'Add Department') {
             addNewDepartment();
         } else if (answers.action === 'Add Role') {
-            Db.addRole();
+            addNewRole();
         } else if (answers.action === 'Add Employee') {
             Db.addEmployee();
         } else if (answers.action === 'Update Employee Role') {
@@ -68,6 +68,32 @@ function addNewDepartment() {
             .then((answers) => {
                 Db.addDepartment(answers.department);
                 console.log(`Added ${answers.department} to the database`);
+            })
+}
+
+function addNewRole() {
+    inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'title',
+                    message: 'What is the name of the role?'
+                },
+                {
+                    type: 'input',
+                    name: 'salary',
+                    message: 'What is the salary of the role?'
+                },
+                {
+                    type: 'list',
+                    name: 'department',
+                    message: 'Which department does the role belong to?',
+                    choices: Db.viewDepartments()
+                }
+            ])
+            .then((answers) => {
+                Db.addRole(answers);
+                console.log(`Added ${answers.title} to the database`);
             })
 }
 
