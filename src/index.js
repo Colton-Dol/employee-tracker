@@ -37,7 +37,7 @@ const performActions = () => {
         } else if (answers.action === 'Add Employee') {
             addNewEmployee();
         } else if (answers.action === 'Update Employee Role') {
-            Db.updateEmployeeRole();
+            updateEmployeeRole();
         } else {
             process.exit(1);
         }
@@ -126,6 +126,28 @@ function addNewEmployee() {
             .then((answers) => {
                 Db.addEmployee(answers);
                 console.log(`Added ${answers.firstName} ${answers.lastName} to the database`);
+            })
+}
+
+function updateEmployeeRole() {
+    inquirer
+            .prompt([
+                {
+                    type: 'list',
+                    name: 'employee',
+                    message: `Which employee's role do you want to update?`,
+                    choices: Db.findEmployees()
+                },
+                {
+                    type: 'list',
+                    name: 'role',
+                    message: 'Which role do you want to assign to the selected employee?',
+                    choices: Db.findRoles()
+                }
+            ])
+            .then((answers) => {
+                Db.updateEmployeeRole(answers);
+                console.log(`Updated employee's role`);
             })
 }
 

@@ -27,7 +27,7 @@ class Db {
     }
 
     viewRoles() {
-        return this.query('SELECT r.id, title, name as department, salary FROM role r INNER JOIN department d on d.id = r.department_id;');
+        return this.query('SELECT r.id, title, name as department, salary FROM role r INNER JOIN department d on d.id = r.department_id ORDER BY id;');
     }
 
     findEmployees() {
@@ -35,7 +35,7 @@ class Db {
     }
 
     viewEmployees() {
-        return this.query('SELECT e.id, first_name, last_name, title, r.department_id as department, salary, manager_id as manager FROM employee e INNER JOIN role r on e.role_id = r.id;');
+        return this.query('SELECT e.id, first_name, last_name, title, r.department_id as department, salary, manager_id as manager FROM employee e INNER JOIN role r on e.role_id = r.id ORDER BY e.id;');
     }
 
     addDepartment(name) {
@@ -51,48 +51,9 @@ class Db {
             ('${answers.firstName}', '${answers.lastName}', ${answers.role}, ${answers.manager})`);
     }
 
-    updateEmployeeRole() {
-        
-        
-        inquirer
-            .prompt([
-                {
-                    type: 'list',
-                    name: 'employee',
-                    message: `Which employee's role do you want to update?`,
-                    choices: [
-
-                    ]
-                },
-                {
-                    type: 'list',
-                    name: 'role',
-                    message: 'Which role do you want to assign to the selected employee?',
-                    choices: [
-
-                    ]
-                }
-            ])
-            .then((answers) => {
-                pool.query(`SELECT id FROM role where title = '${answers.role}'`, (err, res) => {
-                    if (err) {
-                        console.log(err);
-                        process.exit(1);
-                    } else {
-                        const roleId = res.rows[0].id
-
-                        pool.query(`UPDATE employee SET role_id = '${roleId}' where name = '${answers.employee}'`, (err, res) => {
-                            if (err) {
-                                console.log(err);
-                                process.exit(1);
-                            } else {
-                                console.log(`Updated employee's role`);
-                            }
-                        })
-                    }
-                })
-            })
-    }
+    updateEmployeeRole(answers) {
+        return this.query(`UPDATE employee SET role_id = '${answers.role}' where id = ${answers.employee}`);
+    }   
 }
 
 export default new Db();
