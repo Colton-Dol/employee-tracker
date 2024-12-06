@@ -15,7 +15,7 @@ class Db {
     }
 
     findDepartments() {
-        return this.query('SELECT name, id as value FROM department ORDER BY name;')
+        return this.query('SELECT name, id AS value FROM department ORDER BY name;')
     }
 
     viewDepartments() {
@@ -23,19 +23,20 @@ class Db {
     }
 
     findRoles() {
-        return this.query('SELECT title as name, id as value FROM role;');
+        return this.query('SELECT title AS name, id AS value FROM role;');
     }
 
     viewRoles() {
-        return this.query('SELECT r.id, title, name as department, salary FROM role r INNER JOIN department d on d.id = r.department_id ORDER BY id;');
+        return this.query('SELECT r.id, title, name AS department, salary FROM role r INNER JOIN department d on d.id = r.department_id ORDER BY id;');
     }
 
     findEmployees() {
-        return this.query(`SELECT CONCAT(first_name, ' ', last_name) AS name, id as value FROM employee;`);
+        return this.query(`SELECT CONCAT(first_name, ' ', last_name) AS name, id AS value FROM employee;`);
     }
 
     viewEmployees() {
-        return this.query('SELECT e.id, first_name, last_name, title, r.department_id as department, salary, manager_id as manager FROM employee e INNER JOIN role r on e.role_id = r.id ORDER BY e.id;');
+        return this.query(`SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager FROM employee e LEFT JOIN role r on e.role_id = r.id
+            LEFT JOIN department d on r.department_id = d.id LEFT JOIN employee m on e.manager_id = m.id ORDER BY e.id;`);
     }
 
     addDepartment(name) {
