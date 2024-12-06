@@ -12,32 +12,32 @@ const loadPrompts = () => {
             name: 'action',
             message: 'What would you like to do?',
             choices: [
-                'View All Departments',
-                'View All Roles',
                 'View All Employees',
-                'Add Department',
-                'Add Role',
                 'Add Employee',
                 'Update Employee Role',
+                'View All Roles',
+                'Add Role',
+                'View All Departments',
+                'Add Department',
                 'Quit'
             ]
         }
     ])
     .then((answers) => {
-        if (answers.action === 'View All Departments') {
-            viewAllDepartments();
-        } else if (answers.action === 'View All Roles') {
-            viewAllRoles();
-        } else if (answers.action === 'View All Employees') {
+        if (answers.action === 'View All Employees') {
             viewAllEmployees();
-        } else if (answers.action === 'Add Department') {
-            addNewDepartment();
-        } else if (answers.action === 'Add Role') {
-            addNewRole();
         } else if (answers.action === 'Add Employee') {
             addNewEmployee();
         } else if (answers.action === 'Update Employee Role') {
             updateEmployeeRole();
+        } else if (answers.action === 'View All Roles') {
+            viewAllRoles();
+        } else if (answers.action === 'Add Role') {
+            addNewRole();
+        } else if (answers.action === 'View All Departments') {
+            viewAllDepartments();
+        } else if (answers.action === 'Add Department') {
+            addNewDepartment();
         } else {
             process.exit(1);
         }
