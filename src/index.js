@@ -122,20 +122,36 @@ async function addNewEmployee() {
                     name: 'role',
                     message: `What is the employee's role?`,
                     choices: Db.findRoles()
-                },
-                {
-                    type: 'list',
-                    name: 'manager',
-                    message: `Who is the employee's manager?`,
-                    choices: Db.findEmployees()
                 }
             ])
             .then((answers) => {
-                Db.addEmployee(answers);
-                console.log(`Added ${answers.firstName} ${answers.lastName} to the database`);
-            })
+                Db.findEmployees().then((employees) => {
+                    employees.unshift({name: 'None', value: null})
+                    inquirer
+                    .prompt([
+                        {
+                            type: 'list',
+                            name: 'manager',
+                            message: `Who is the employee's manager?`,
+                            choices: employees
+                        }
+                    ])
+                    .then((answer) => {
+                        const employee = {
+                            firstName: answers.firstName,
+                            lastName: answers.lastName,
+                            role: answers.role,
+                            manager: answer.manager
+                        };
 
-    loadPrompts();
+                        Db.addEmployee(employee)
+                        .then(
+                        console.log(`Added ${answers.firstName} ${answers.lastName} to the database`)
+                        )
+                        .then(loadPrompts())
+                    })
+                })
+            })
 }
 
 async function updateEmployeeRole() {
